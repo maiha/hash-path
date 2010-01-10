@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.description = %q{path accessor to hierarchical hash}
   s.email = %q{maiha@wota.jp}
   s.extra_rdoc_files = ["README", "MIT-LICENSE"]
-  s.files = ["MIT-LICENSE", "README", "Rakefile", "lib/hash_path.rb"]
+  s.files = ["MIT-LICENSE", "README", "Rakefile", "lib/hash-path.rb"]
   s.homepage = %q{http://github.com/maiha/hash-path}
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{asakusarb}
