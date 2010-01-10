@@ -1,0 +1,52 @@
+hash-path
+=========
+
+  path accessor to hierarchical hash
+
+
+Class
+=====
+
+  * HashPath
+      .path    : define path accessor
+      .paths   : defined paths
+
+
+Example
+=======
+
+  # JSON.parse(...) returns like this
+  hash = {
+    "Name" => "foo",
+    "Body" => "content",
+    "Additional" => {
+      "Code" => 1234,
+      "StartDateTime"=>"2010/01/10 19:30"
+    }
+  }
+
+  class Item < HashPath
+    path :name, "Name"
+    path :body, "Body"
+    path :code, "Additional/Code"
+    path :time, "Additional/StartDateTime"
+  end 
+
+  item = Item.new(hash)
+  item.name  # => "foo"
+  item.code  # => 1234
+  item.time  # => "2010/01/10 19:30"
+
+
+Todo
+====
+
+  * create spec
+  * convert value to some type automatically
+
+
+Author
+======
+
+  maiha@wota.jp
+
