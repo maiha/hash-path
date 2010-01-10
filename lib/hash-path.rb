@@ -1,24 +1,41 @@
 
-class HashPath
+class HashPath < Hash
   def self.paths
     @paths ||= {}
   end
 
   def self.path(key, path)
-    paths[key.to_sym] = path
+    paths[key.to_s] = path
   end
 
-  def initialize(hash)
-    @hash   = hash
-    @cached = {}
+  def [](key)
+    key = key.to_s
+
+    # first, check exact value
+    return super if has_key?(key)
+
+    # second, browse children
+    return key.split("/").inject(self) {|hash, key| hash[key]}
+  rescue Exception => e
+    return rescue_hierarchical_access(key, e)
+  end
+
+  def initialize(hash = {})
+    super()
+    replace(hash)
   end
 
   private
+    def rescue_hierarchical_access(key, e)
+      return nil
+    end
+
     def method_missing(name, *args, &block)
-      name = name.to_sym
-      return @cached[name] if @cached.has_key?(name)
-      return super unless path = self.class.paths[name]
-      return @cached[name] = path.split("/").inject(@hash) {|hash, key| hash[key]} rescue nil
+      if args.empty?
+        self[ self.class.paths[name.to_s] || name ]
+      else
+        super
+      end
     end
 end
 
