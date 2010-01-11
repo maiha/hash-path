@@ -30,12 +30,16 @@ Example
     path :body, "Body"
     path :code, "Additional/Code"
     path :time, "Additional/StartDateTime"
+
+    def time
+      Time.parse(super)  # parse is defined in active_support, night-time,... gem
+    end    
   end 
 
   item = Item.new(hash)
   item.name  # => "foo"
   item.code  # => 1234
-  item.time  # => "2010/01/10 19:30"
+  item.time  # => Sun Jan 10 19:30:00 +0900 2010
 
 
 Todo

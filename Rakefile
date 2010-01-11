@@ -6,7 +6,7 @@ AUTHOR = "maiha"
 EMAIL = "maiha@wota.jp"
 HOMEPAGE = "http://github.com/maiha/hash-path"
 SUMMARY = "path accessor to hierarchical hash"
-GEM_VERSION = "0.0.1"
+GEM_VERSION = "0.0.2"
 
 spec = Gem::Specification.new do |s|
   s.rubyforge_project = 'asakusarb'
