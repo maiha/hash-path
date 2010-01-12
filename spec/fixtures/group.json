@@ -1,0 +1,8 @@
+{
+  "name": "Buono",
+  "members": [
+    {"name": "momo", "age": 17},
+    {"name": "miya", "age": 17},
+    {"name": "airi", "age": 15}
+  ]
+}

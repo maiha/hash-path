@@ -42,10 +42,37 @@ Example
   item.time  # => Sun Jan 10 19:30:00 +0900 2010
 
 
+Advanced
+========
+
+  # Extends HashPath to accept jsonpath syntax for path value.
+  # Install gem first, and then require 'hash-path/json'.
+  #
+  #   gem install jsonpath
+
+  require 'hash-path/json'
+
+  hash = {
+    "name"=>"Buono",
+    "members"=>
+      [{"name"=>"momo", "age"=>17},
+       {"name"=>"miya", "age"=>17},
+       {"name"=>"airi", "age"=>15}]
+  }
+
+  class Group < HashPath
+    path :leader              , "$..members[0]"
+    path :middle_school_member, "$..members[?(@['age'] <= 15)]"
+  end
+
+  group = Group.new(hash)
+  group.leader                # => [{"name"=>"momo", "age"=>17}]
+  group.middle_school_member  # => [{"name"=>"airi", "age"=>15}]
+
+
 Todo
 ====
 
-  * create spec
   * convert value to some type automatically
 
 

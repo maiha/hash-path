@@ -1,23 +1,29 @@
-
 class HashPath < Hash
-  def self.paths
-    @paths ||= {}
-  end
+  class << self
+    def paths
+      @paths ||= {}
+    end
 
-  def self.path(key, path)
-    paths[key.to_s] = path
+    def path(key, path)
+      paths[key.to_s] = path
+    end
   end
 
   def [](key)
     key = key.to_s
 
-    # first, check exact value
-    return super if has_key?(key)
+    if (key[0,1] == '$') && defined?(JsonPath)
+      # jsonpath
+      @jsonpath ||= JsonPath.wrap(self)
+      return @jsonpath.path(key).to_a
 
-    # second, browse children
-    return key.split("/").inject(self) {|hash, key| hash[key]}
-  rescue Exception => e
-    return rescue_hierarchical_access(key, e)
+    else
+      # first, check if key has '/'
+      return super unless key.index('/')
+
+      # second, browse children
+      return key.split("/").inject(self) {|hash, k| hash ? hash[k] : nil}
+    end
   end
 
   def initialize(hash = {})
@@ -26,10 +32,6 @@ class HashPath < Hash
   end
 
   private
-    def rescue_hierarchical_access(key, e)
-      return nil
-    end
-
     def method_missing(name, *args, &block)
       if args.empty?
         self[ self.class.paths[name.to_s] || name ]

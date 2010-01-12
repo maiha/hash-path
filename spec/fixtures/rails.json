@@ -1,0 +1,14 @@
+{
+  "app": {
+    "models":  "ActiveRecord",
+    "controllers" : "ActionController",
+    "views" : "ActionView",
+    "helpers" : "ActionView::Helpers"
+  },
+  "vendor": {
+    "plugins": {
+      "haml" : "Haml",
+      "aasm" : "Aasm"
+    }
+  }
+}

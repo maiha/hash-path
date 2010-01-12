@@ -10,25 +10,8 @@ describe HashPath do
     HashPath.new.should respond_to(:[])
   end
 
-  def data
-    {
-      "app" => {
-        "models"      => "ActiveRecord",
-        "controllers" => "ActionController",
-        "views"       => "ActionView",
-        "helpers"     => "ActionView::Helpers",
-      },
-      "vendor" => {
-        "plugins" => {
-          "aasm" => "Aasm",
-          "haml" => "Haml",
-        },
-      }
-    }
-  end
-
   describe "#[]" do
-    subject { HashPath.new(data) }
+    subject { HashPath.new(data('rails.json')) }
 
     context "(for present)" do
       its("app/models")     { should == "ActiveRecord" }
@@ -46,7 +29,7 @@ describe HashPath do
         path :nothing , "no/such/value"
       end
 
-      subject { Labeled.new(data) }
+      subject { Labeled.new(data('rails.json')) }
 
       its(:model)           { should == "ActiveRecord" }
       its("model")          { should == "ActiveRecord" }
